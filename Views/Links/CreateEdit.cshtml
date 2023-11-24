@@ -1,0 +1,76 @@
+﻿@model LinkShortener.Models.Link
+
+@{
+	ViewData["Title"] = "Create/Edit Page";
+}
+
+<h1>Create</h1>
+
+<h4>Link</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<h3 class="text-danger">@ViewData["CreateError"]</h3>
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="LongUrl" class="control-label"></label>
+				<input asp-for="LongUrl" class="form-control" />
+				<span asp-validation-for="LongUrl" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<h1>Edit</h1>
+
+<h4>Link</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<h2 class="text-danger">@ViewData["EditError"]</h2>
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<select asp-for="Id" class="form-control" id="idSelect"></select>
+				<span asp-validation-for="Id" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LongUrl" class="control-label"></label>
+				<input asp-for="LongUrl" class="form-control" />
+				<span asp-validation-for="LongUrl" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$.get('/Links/GetLinks', function (data) {
+			var idSelect = $('#idSelect');
+
+			$.each(data, function (index, item) {
+				console.log(item.id)
+				idSelect.append($('<option></option>').val(item.id).html(item.id));
+			});
+		});
+	});
+</script>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
