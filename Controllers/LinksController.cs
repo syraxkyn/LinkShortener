@@ -29,23 +29,6 @@ namespace LinkShortener.Controllers
             return View(await _context.Links.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var link = await _context.Links
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (link == null)
-            {
-                return NotFound();
-            }
-
-            return View(link);
-        }
-
         public IActionResult CreateEdit()
         {
             return View();
@@ -159,7 +142,7 @@ namespace LinkShortener.Controllers
             {
                 link.Clicks++;
                 await _context.SaveChangesAsync();
-                if (link.LongUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                if (link.LongUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase)|| link.LongUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 {
                     return Redirect($"{link.LongUrl}");
                 }
