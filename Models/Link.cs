@@ -9,7 +9,7 @@ namespace LinkShortener.Models
         public int Id { get; set; }
         private string? _longUrl;
         [Required(ErrorMessage = "The field LongUrl is required")]
-        [RegularExpression(@"^(https?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$", ErrorMessage = "Invalid URL")]
+        [RegularExpression(@"^(https?://)?([\w-]+\.)+[\w-]+(:\d+)?(/[\w- ./?%&=]*)?$", ErrorMessage = "Invalid URL")]
         public string? LongUrl
         {
             get => _longUrl;
